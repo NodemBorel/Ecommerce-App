@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include('myfunctions.php');
+
 include('../config/dbcon.php');
 
 if(isset($_POST['register_btn']))
@@ -60,15 +62,23 @@ else if(isset($_POST['login_btn']))
         $userdata = mysqli_fetch_array($login_query_run);
         $username = $userdata['name'];
         $useremail = $userdata['email'];
+        $role_as = $userdata['role_as'];
 
         //store user data in session variable
         $_SESSION['auth_user'] = [
             'name' => $username,
-            'email' => $useremial
+            'email' => $useremail
         ];
 
-        $_SESSION['message'] = 'Logged In Successfully';
-        header('Location: ../index.php');
+        $_SESSION['role_as'] = $role_as;
+
+        if($role_as == 1){
+            $_SESSION['message'] = 'Welcomw to admin Dashboard';
+            header('Location: ../admin/index.php');
+        }
+        else{
+            redirect("../index.php", "Logged In Successfully");
+        }
     }
     else{
         $_SESSION['message'] = 'invalid Credential';
