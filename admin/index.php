@@ -3,6 +3,8 @@
 include('../middleware/adminMiddleware.php'); 
 include('includes/header.php');
 
+echo substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'], "/"));
+
 ?>
 
 <div class="container">

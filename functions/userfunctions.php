@@ -1,18 +1,25 @@
 <?php
 session_start();
-include('../config/dbcon.php');
+include('config/dbcon.php');
 
-function getAll($table)
+function getSlugActive($table, $slug)
 {
     global $con;
-    $query = "SELECT * FROM $table";
+    $query = "SELECT * FROM $table WHERE slug='$slug' AND status='0' LIMIT 1 ";
     return $query_run = mysqli_query($con, $query);
 }
 
-function getByID($table, $id)
+function getIDActive($table, $id)
 {
     global $con;
-    $query = "SELECT * FROM $table WHERE id='$id' ";
+    $query = "SELECT * FROM $table WHERE id='$id' status='0'";
+    return $query_run = mysqli_query($con, $query);
+}
+
+function getProdByCategory($category_id)
+{
+    global $con;
+    $query = "SELECT * FROM products WHERE category_id='$category_id' AND status='0' ";
     return $query_run = mysqli_query($con, $query);
 }
 
@@ -29,5 +36,6 @@ function redirect($url, $message)
     header('Location: '.$url);
     exit();
 }
+
 
 ?>
